@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="OracleConnectionPoolTest" project="SpringBoard" tests="2" started="2" failures="0" errors="0" ignored="0">
+  <testsuite name="com.ict.dao.OracleConnectionPoolTest" time="0.014">
+    <testcase name="testConnection" classname="com.ict.dao.OracleConnectionPoolTest" time="0.006"/>
+    <testcase name="testMyBatis" classname="com.ict.dao.OracleConnectionPoolTest" time="0.007"/>
+  </testsuite>
+</testrun>
