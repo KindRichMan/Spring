@@ -31,12 +31,17 @@
            <!-- bno번 글 조회 구문 -->
                SELECT * FROM board_tbl WHERE bno=#{bno}
           </select>     
-                         
-           <delete id="delete" resultType="com.ict.domain.BoardVO">
-             DELETE *FROM board_tbl WHERE bno=#{bno}
+               
+               
+         <!-- BoardMapper.java.dml delete 메서드를 연결해 해당 메서드 실생시 실행될 쿼리문 작성 -->                
+           <delete id="delete">
+             DELETE FROM board_tbl WHERE bno=#{bno}
          </delete>
           
-         
+         <!-- BoardMapper.java.의 update 메서드를 연결해 해당 메서드 실행시 실행될 쿼리문 작성 -->
+         <update id="update">
+           UPDATE board_tbl SET title=#{title}, content=#{content},updatedate=SYSDATE WHERE bno=#{bno}
+         </update>
           
           
           

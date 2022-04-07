@@ -25,7 +25,7 @@ public class BoardMapperTests {
 	// 테스트용 메서드의 이름은 testGetList입니다.
 	// 테스트 코드가 실행될 수 있도록 작성해주세요.
 	
-	//@Test
+	@Test
 	public void testGetList() {
 	List<BoardVO> result = boardMapper.getList();
 		  log.info("저장된 게시물 정보 :"  + result);
@@ -60,14 +60,39 @@ public class BoardMapperTests {
 	}
 		
 	
-	
-	@Test
+	// delete 메서드에 대한 테스트 코드 작성 후 
+	// 삭제 여부를 sqldeveloper나 상단의 getAllList()로 확인해보세요.
+	//@Test
 	public void getDelete() {
 		boardMapper.delete(22);
+	}	
+	
+	//update 메서드에 대한 테스트 코드를 작성해주신 다음
+	// 수정여부를 getAllList()로 확인해보세요
+//	@Test
+	public void getUpdate() {
+
+		BoardVO board = new BoardVO();
+		  log.info("전달 데이터 아직 입력안된 vo : "+ board);
 		
+		board.setTitle("삼장법사");
+		board.setContent("화유기꼬붕");
+		board.setBno(3);
 		
+		log.info("전달 데이터가 입력된 vo :" + board);
+		
+		// 실행해보세요.
+		boardMapper.update(board);
 	}
 	
+	
+	// vo안쓰고 데이터 전달하기
+	// 2개 이상의 파라미터를 따로따로 전달할때는 각 파라미터 왼쪽에 @Param을 붙여줍니다.
+//	@Test
+	public void getUpdate2() {
+
+		boardMapper.update2("up2로 바꾼제목", "up2로 바꾼본문", 2);
+	}
 	
 	
 }
