@@ -25,13 +25,13 @@ public class BoardMapperTests {
 	// 테스트용 메서드의 이름은 testGetList입니다.
 	// 테스트 코드가 실행될 수 있도록 작성해주세요.
 	
-	@Test
+//	@Test
 	public void testGetList() {
 	List<BoardVO> result = boardMapper.getList();
 		  log.info("저장된 게시물 정보 :"  + result);
 	     //  log.info(boardMapper.getList());
 }
-	//@Test
+//	@Test
 	public void testInsert() {
 		//vo를 입력받는 insert 메서드 특성상
 		// title, content, writer가 채워진 vo를 먼저 생성해야 합니다.

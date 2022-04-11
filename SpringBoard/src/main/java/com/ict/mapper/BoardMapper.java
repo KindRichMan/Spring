@@ -11,7 +11,7 @@ import com.ict.domain.BoardVO;
 public interface BoardMapper {
 	
 	
-	public List<BoardVO> getList();
+	public List<BoardVO> getList(long pageNum);
 	
 	
 	public void insert(BoardVO vo);// 리턴자료가 없어서 void임.

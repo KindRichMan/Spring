@@ -8,8 +8,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-        <h1>연결확인부터 합니다.</h1>
-        ${boardList }
+       <h1>연결확인부터 합니다.</h1>
+     
        <hr/>
        <hr/>
        
@@ -24,13 +24,14 @@
            <c:forEach var="board" items="${boardList}">
 	            <tr>
 	                <td>${board.bno}</td>
-	                <td><a href="/boardDetail">${board.title}</td>
+	                <td><a href="/boardDetail/${board.bno}">${board.title}</td>
 	                <td>${board.writer}</td>
 	                <td>${board.regdate}</td>
 	                <td>${board.updatedate}</td>
 	            </tr>
            </c:forEach>   
         </table>
+        <a href="/boardInsert"><button>글쓰기</button></a>
 </body>
 </html>
              
