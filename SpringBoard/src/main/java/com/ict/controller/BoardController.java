@@ -8,8 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ict.domain.BoardVO;
+import com.ict.domain.Criteria;
+import com.ict.domain.PageMaker;
 import com.ict.mapper.BoardMapper;
 
 import lombok.extern.log4j.Log4j;
@@ -32,13 +35,33 @@ public class BoardController {
 	// 전체 글 목록을 볼 수 있는 페이지인 boardList.jsp로 연결되는
 	// /boardList 주소를 get방식으로 선언해주세요.
 	// 메서드 내부에서는 boardMapper의 .getAllList를 호출해 그 결과를 바인딩합니다.
-	@GetMapping(value="/boardList")
-	public String getBoardList(long pageNum, Model model) {
+	@GetMapping("/boardList")//      "/boardList"
+	//@RequestParam(name="사용할변수명",defaultValue="지정하고싶은 기본값")변수 왼쪽에 저렇게 붙여주면 처리완료
+	//@PathVariable의 경우 defaultValue를 직접 줄 수 없으나, required=false를 이용해 필수 입력을 안받게 처리한후
+	//@RequestParam(name="pageNum",defaultValue="1")   //위에 주소는 @GetMapping("/boardList")
+	
+	// 컨트롤러 내부에서 디폴트값을 입력해줄 수 있다. 
+	// 기본형 자료는 null을 저장할 수 없기 때문에 wrapper class를 이용해 Long을 선언합니다.
+	public String getBoardList(Criteria cri, Model model) {//name는(pageNum과 이름이 다르게 하고싶을때사용)
+	//	if(pageNum==null) {
+	//		pageNum=1L;// Long형은 숫자 뒤에 L을 붙여야 대입됩니다.
+//		}
+		
+		log.info("PathVariable로 입력받은 pageNum값 :" + cri);
 		
 		// model.addAttribute("바인딩이름",바인딩자료);
-		List<BoardVO> boardList= boardMapper.getList(pageNum);
+		List<BoardVO> boardList= boardMapper.getList(cri);
 		log.info("넘어온 글 관련 정보 목록 : " + boardList);
 		model.addAttribute("boardList",boardList);
+		
+		
+		// 버튼 처리를 위해 추가로 페이지메이커 생성 및 셋팅
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		int countPage = boardMapper.countPageNum();  // 131대신 실제로 DB내 글 개수를 받아옴
+		pageMaker.setTotalBoard(countPage);// calcData()호출도 되면서 순식간에 prev,next, startPage,endPage셋팅
+		model.addAttribute("pageMaker", pageMaker);
+		
 		return "boardList";
 		
 	}
@@ -122,8 +145,7 @@ public class BoardController {
 	}
 	
 	
-	
-	
+
 	
 	
 	
