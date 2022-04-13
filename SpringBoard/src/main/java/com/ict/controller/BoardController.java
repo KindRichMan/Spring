@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ict.domain.BoardVO;
 import com.ict.domain.Criteria;
 import com.ict.domain.PageMaker;
+import com.ict.domain.SearchCriteria;
 import com.ict.mapper.BoardMapper;
+import com.ict.service.BoardService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -25,12 +28,16 @@ import lombok.extern.log4j.Log4j;
 @Log4j 
 public class BoardController {
 	
+	// 컨트롤러는 Service만 호출하도록 구조를 바꿉니다.
+	// Service를 BoardController 내부에서 쓸 수 있도록 선언/주입해주세요.
+	@Autowired
+	private BoardService service;
+	
 	// 전체 회원을 보려면, 회원목록을 들고오는 메서드를 실행해햐 하고
 	// 그러면, 그 메서드를 보유하고 있는 클래스를 선언하고 주입해주줘야합니다.
 	// DB 접근시 사용하는 BoardMapper를 선언하고 주입해주세요.
 	// 참고) BoardMapperTests.java
-    @Autowired
-	private BoardMapper boardMapper;
+   
 	
 	// 전체 글 목록을 볼 수 있는 페이지인 boardList.jsp로 연결되는
 	// /boardList 주소를 get방식으로 선언해주세요.
@@ -42,7 +49,7 @@ public class BoardController {
 	
 	// 컨트롤러 내부에서 디폴트값을 입력해줄 수 있다. 
 	// 기본형 자료는 null을 저장할 수 없기 때문에 wrapper class를 이용해 Long을 선언합니다.
-	public String getBoardList(Criteria cri, Model model) {//name는(pageNum과 이름이 다르게 하고싶을때사용)
+	public String getBoardList(SearchCriteria cri, Model model) {//name는(pageNum과 이름이 다르게 하고싶을때사용)
 	//	if(pageNum==null) {
 	//		pageNum=1L;// Long형은 숫자 뒤에 L을 붙여야 대입됩니다.
 //		}
@@ -50,7 +57,7 @@ public class BoardController {
 		log.info("PathVariable로 입력받은 pageNum값 :" + cri);
 		
 		// model.addAttribute("바인딩이름",바인딩자료);
-		List<BoardVO> boardList= boardMapper.getList(cri);
+		List<BoardVO> boardList= service.getList(cri);
 		log.info("넘어온 글 관련 정보 목록 : " + boardList);
 		model.addAttribute("boardList",boardList);
 		
@@ -58,7 +65,7 @@ public class BoardController {
 		// 버튼 처리를 위해 추가로 페이지메이커 생성 및 셋팅
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
-		int countPage = boardMapper.countPageNum();  // 131대신 실제로 DB내 글 개수를 받아옴
+		int countPage = service.countPageNum();  // 131대신 실제로 DB내 글 개수를 받아옴
 		pageMaker.setTotalBoard(countPage);// calcData()호출도 되면서 순식간에 prev,next, startPage,endPage셋팅
 		model.addAttribute("pageMaker", pageMaker);
 		
@@ -72,7 +79,7 @@ public class BoardController {
 	//
 	@GetMapping(value="/boardDetail/{bno}")
 	public String getBoardDetail(@PathVariable long bno, Model model) {
-		BoardVO board = boardMapper.select(bno);
+		BoardVO board = service.select(bno);
 		model.addAttribute("board",board);
 		return "boardDetail";
 	}
@@ -97,7 +104,7 @@ public class BoardController {
 	public String boardInsert(BoardVO board) {
 		
 		log.info("폼에서 날아온 데이터:" + board);
-		boardMapper.insert(board);
+		service.insert(board);
 		return "redirect:/boardList";
 		
 	}
@@ -109,7 +116,7 @@ public class BoardController {
 	// submit 버튼을 생성해서 처리하게 해주세요.
 	@PostMapping(value="boardDelete")
 	    public String boardDelete(long bno) {
-		boardMapper.delete(bno);
+		service.delete(bno);
 		return "redirect:/boardList";
 	}
 	
@@ -121,8 +128,8 @@ public class BoardController {
 	// 폼페이지 이름은 boardUpdateForm.jsp 입니다.
 	@PostMapping("boardUpdateForm")
 	public String boardUpdateForm(long bno,Model model) {
-		BoardVO board = boardMapper.select(bno);
-		boardMapper.update(board);
+		BoardVO board = service.select(bno);
+		//service.update(board);
 		log.info("수정폼으로 넘어옴");
 		model.addAttribute("board",board);
 		
@@ -137,7 +144,7 @@ public class BoardController {
 	@PostMapping("/boardUpdate")
 	public String boardUpdate(BoardVO board) {
 		// update 호출
-		boardMapper.update(board);
+		service.update(board);
 		//redirect: 주소&글번=getter
 		log.info("수정완료폼");
 		return "redirect:/boardDetail/"+ board.getBno();
@@ -145,8 +152,7 @@ public class BoardController {
 	}
 	
 	
-
-	
+    
 	
 	
 	
