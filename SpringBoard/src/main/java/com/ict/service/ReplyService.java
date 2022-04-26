@@ -11,7 +11,7 @@ public interface ReplyService {
 	
 	public void addReply(ReplyVO vo);
 	
-	public  void modifaReply(ReplyVO vo);
+	public  void modifyReply(ReplyVO vo);
 	
 	public void removeReply(Long rno);
 	

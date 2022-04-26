@@ -11,7 +11,7 @@
     
        <!-- ${board } -->
        
-         <form action="/boardUpdate" method="post">
+         <form action="/board/boardUpdate" method="post">
          <input type="hidden" name="bno" value="${board.bno }"/>
        글제목 : <input type="text" name="title" value="${board.title }">
        작성자 :<input type="text" name="writer" value="${board.writer }"><br/>

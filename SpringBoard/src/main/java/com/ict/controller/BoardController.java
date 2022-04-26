@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -26,7 +27,8 @@ import lombok.extern.log4j.Log4j;
 
 // 컨트롤러가 컨트롤러 기능을 할 수 있도록 처리해주세요.
 @Controller
-@Log4j 
+@Log4j
+@RequestMapping("/board")
 public class BoardController {
 	
 	// 컨트롤러는 Service만 호출하도록 구조를 바꿉니다.
@@ -70,7 +72,7 @@ public class BoardController {
 		pageMaker.setTotalBoard(countPage);// calcData()호출도 되면서 순식간에 prev,next, startPage,endPage셋팅
 		model.addAttribute("pageMaker", pageMaker);
 		
-		return "boardList";
+		return "board/boardList";
 		
 	}
 	
@@ -82,7 +84,7 @@ public class BoardController {
 	public String getBoardDetail(@PathVariable long bno, Model model) {
 		BoardVO board = service.select(bno);
 		model.addAttribute("board",board);
-		return "boardDetail";
+		return "board/boardDetail";
 	}
 	
 	
@@ -93,7 +95,7 @@ public class BoardController {
 	
 	 @GetMapping("boardInsert")
 	 public String boardForm() {
-		 return "boardForm";
+		 return "board/boardForm";
 	 }
 	
 	 
@@ -106,7 +108,7 @@ public class BoardController {
 		
 		log.info("폼에서 날아온 데이터:" + board);
 		service.insert(board);
-		return "redirect:/boardList";
+		return "redirect:/board/boardList";
 		
 	}
 	
@@ -131,7 +133,7 @@ public class BoardController {
 		// parameters.put("keyword", cri.getKeyword());
 		// 전달
 		// rttr.addAllAttributes(parameters);
-		return "redirect:/boardList";
+		return "redirect:/board/boardList";
 	}
 	
 	
@@ -147,7 +149,7 @@ public class BoardController {
 		log.info("수정폼으로 넘어옴");
 		model.addAttribute("board",board);
 		
-		return "boardUpdateForm";
+		return "board/boardUpdateForm";
 	}
 
 	// /boardUpdate 를 post방식으로 접속하는 메서드를 만들겠습니다.
@@ -176,7 +178,7 @@ public class BoardController {
 		rttr.addAttribute("SearchType",cri.getSearchType());
 		rttr.addAttribute("keyword",cri.getKeyword());
 		
-		return "redirect:/boardDetail/"+ board.getBno();
+		return "redirect:/board/boardDetail/"+ board.getBno();
 		
 	}
 	
