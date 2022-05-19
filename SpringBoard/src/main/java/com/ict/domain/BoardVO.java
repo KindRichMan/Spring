@@ -1,6 +1,7 @@
 package com.ict.domain;
 
 import java.sql.Date;
+import java.util.List;
 
 // date에 초단위로 나오는 시간 import java.sql.Timestamp;
 
@@ -20,4 +21,6 @@ public class BoardVO {
     private Date regdate;
     private Date updatedate;
     private int replyCount;
+    
+    private List<BoardAttachVO> attachList;
 }
