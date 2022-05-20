@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import lombok.extern.log4j.Log4j;
 
 @Log4j
-public  class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
+public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -28,28 +28,21 @@ public  class CustomLoginSuccessHandler implements AuthenticationSuccessHandler 
 			roleList.add(role.getAuthority());
 		}
 		
-		
+		// roleList에 포함된 권한을 통해 로그인 계정의 권한에 따라 처리
 		log.warn("부여받은 권한들 : " + roleList);
 		if(roleList.contains("ROLE_ADMIN")) {
-			response.sendRedirect("/");//추후에  주소는 로그인된 유저가 갈 페이지를 만들고 걱로 연결해주세요.
+			response.sendRedirect("");// 주소는 추후에 로그인된 유저가 갈 페이지를 만들고 거기로 연결해주세요.
 			return;
 		}
-		if(roleList.contains("ROLE_MEMER")) {
-			response.sendRedirect("/");//추후에  주소는 로그인된 유저가 갈 페이지를 만들고 걱로 연결해주세요.
+		if(roleList.contains("ROLE_MEMBER")) {
+			response.sendRedirect("");// 주소는 추후에 로그인된 유저가 갈 페이지를 만들고 거기로 연결해주세요.
 			return;
 		}
 		
-		response.sendRedirect("/");// 로그인 안한유저에게 보낼 페이지
+		response.sendRedirect("");// 로그인 안한유저에게 보낼 페이지
 	}
-	
-	
-	
-		
-		
-		
-		
-	}
+}
 
-	
+
 
 

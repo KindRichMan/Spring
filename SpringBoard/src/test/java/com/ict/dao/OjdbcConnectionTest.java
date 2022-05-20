@@ -11,11 +11,11 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 public class OjdbcConnectionTest {
-	
+
 	static {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -23,17 +23,13 @@ public class OjdbcConnectionTest {
 	@Test
 	public void testConnection() {
 		try(Connection con = DriverManager.getConnection(
-				"jdbc:oracle:thin:@localhost:1521/XEPDB1", 
-				"mytest", 
-				"mytest"   
-			)){
-               
+					"jdbc:oracle:thin:@localhost:1521/XEPDB1",
+					"mytest",
+					"mytest"
+				)){
 			log.info(con);
-     } catch (Exception e){
-           fail(e.getMessage());
-	}
-	
-	
-	
-	}
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}	
 }

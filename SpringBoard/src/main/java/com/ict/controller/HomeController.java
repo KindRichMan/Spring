@@ -37,12 +37,10 @@ public class HomeController {
 		return "home";
 	}
 	
-	
 	@GetMapping("/test")
 	public void ajaxTest() {
 		
 	}
-	
 	
 	@GetMapping("/onClickTest")
 	public void ajaxTest2() {
@@ -52,13 +50,7 @@ public class HomeController {
 	@GetMapping("/insertTest")
 	public void insertTest() {
 		
-		
-		
-		
 	}
-	
-	
-	
 	
 	
 	

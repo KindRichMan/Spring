@@ -80,6 +80,10 @@
 					contentType: false,
 					data: formData,
 					type:"POST",
+					beforeSend : function(xhr) {
+						 xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+
 					dataType:"json",
 					success: function(result){
 						console.log(result);

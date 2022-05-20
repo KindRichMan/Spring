@@ -3,10 +3,8 @@ package com.ict.domain;
 import java.sql.Date;
 import java.util.List;
 
-
-import org.springframework.security.access.vote.AuthenticatedVoter;
-
 import lombok.Data;
+
 @Data
 public class MemberVO {
 	
@@ -18,5 +16,4 @@ public class MemberVO {
 	private Date regDate;
 	private Date updateDate;
 	private List<AuthVO> authList;
-
 }
